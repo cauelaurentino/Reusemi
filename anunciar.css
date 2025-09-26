@@ -1,0 +1,365 @@
+@charset "UTF-8";
+
+        @font-face {
+          font-family: 'medium';
+          src: url('fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'bold';
+            src: url(fonts/Montserrat/static/Montserrat-Bold.ttf);
+        }
+
+        :root {
+          --verde-principal: #0f3600;
+          --verde-secundario: #1c6400;
+          --verde-terciario: rgb(128, 231, 26);
+          --verde-claro: rgb(156, 255, 57);
+          --verde-escuro: #133d03;
+          --cinza-claro: rgb(78, 78, 78);
+          --cinza: rgb(59, 59, 59);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'medium';
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 130px 20px 130px;
+        }
+
+        .header-esquerda {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+        }
+
+        .pesquisar {
+            padding: 13px 35px;
+            margin: 0px 0px 0px 30px;
+            border-radius: 10px;
+            position: relative;
+            border: solid rgb(97, 97, 97) .5px;
+        }
+
+        .buscar {
+            color: white;
+            padding: 13px 20px 13px 35px;
+            margin-left: 250px;
+            border-radius: 10px;
+            position: absolute;
+            background-color: var(--verde-terciario);
+            border: solid rgb(97, 97, 97) .5px;
+            transition: background-color .2s;
+        }
+
+        .buscar:hover {
+            background-color: rgb(108, 202, 13);;
+            transition: background-color .2s;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .header-link {
+            text-decoration: none;
+            font-family: 'medium';
+            margin: 10px 15px 0px 15px;
+            color: var(--cinza-claro);
+            transition: color .2s;
+        }
+
+        .header-link:hover {
+            color: #6bb422;
+            transition: color .2s;
+        }
+
+        .header-group-links {
+            display: flex;
+            text-align: center;
+        }
+
+        .header-special {
+            text-decoration: none;
+            background-color: var(--verde-terciario);
+            color: white;
+            margin-left: 15px;
+            padding: 10px 20px 0px 20px;
+            border-radius: 10px;
+            transition: transform, .5s;
+        }
+
+        .header-special:hover {
+            transform: translateY(-5px);
+            background-color: rgb(108, 202, 13);
+        }
+
+        .linha-fina {
+            height: 1px;              
+            background-color: #82be27; 
+            width: 100%;              
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Conteúdo principal da página de anúncio */
+        .anuncio-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .anuncio-titulo {
+            color: var(--verde-principal);
+            margin-bottom: 30px;
+            font-size: 40;
+        }
+
+        .anuncio-form {
+            display: flex;
+            gap: 30px;
+        }
+
+        .form-coluna {
+            flex: 1;
+        }
+
+        .form-grupo {
+            margin-bottom: 20px;
+        }
+
+        .form-grupo label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--verde-escuro);
+            font-weight: bold;
+        }
+
+        .form-grupo input,
+        .form-grupo select,
+        .form-grupo textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-grupo textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--verde-terciario);
+        }
+
+        .upload-area i {
+            font-size: 40px;
+            color: var(--verde-terciario);
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: var(--cinza-claro);
+        }
+
+        #imagens-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .imagem-preview {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .imagem-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remover-imagem {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botoes-anuncio {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-cancelar {
+            background-color: #f0f0f0;
+            color: var(--cinza);
+        }
+
+        .btn-cancelar:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-publicar {
+            background-color: var(--verde-terciario);
+            color: white;
+        }
+
+        .btn-publicar:hover {
+            background-color: rgb(108, 202, 13);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--verde-escuro);
+            color: white;
+            padding: 30px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin: 0px 50px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color, .3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--verde-claro);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 35px;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--verde-claro);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .header-esquerda {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .pesquisar {
+                margin-left: 15px;
+                width: 200px;
+            }
+
+            .buscar {
+                margin-left: 180px;
+            }
+
+            .categories {
+                margin: 15px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .anuncio-form {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                margin: 0;
+            }
+
+            .footer-section {
+                margin-bottom: 20px;
+            }
+        }
