@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartphone Samsung Galaxy S20 - Reusemi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ESTILOS GLOBAIS BASEADOS NOS ARQUIVOS FORNECIDOS */
+        @charset "UTF-8";
+
+        @font-face {
+          font-family: 'medium';
+          src: url('fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'bold';
+            src: url(fonts/Montserrat/static/Montserrat-Bold.ttf);
+        }
+
+        :root {
+          --verde-principal: #0f3600;
+          --verde-secundario: #1c6400;
+          --verde-terciario: rgb(128, 231, 26);
+          --verde-claro: rgb(156, 255, 57);
+          --verde-escuro: #133d03;
+          --cinza-claro: rgb(78, 78, 78);
+          --cinza: rgb(59, 59, 59);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'medium';
+            box-sizing: border-box;
+        }
+
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* ESTILOS ESPECÍFICOS DA PÁGINA DE PRODUTO */
+        .product-detail-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-images {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .image-thumbnails {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .thumbnail.active {
+            border-color: #1c6400;
+        }
+
+        .product-info {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product-title {
+            font-size: 24px;
+            margin: 10px 0px 25px 0px;
+            color: var(--verde-principal);
+            white-space: normal;
+            overflow: visible;
+            display: block;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1c6400;
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+
+        .product-description {
+            margin-bottom: 25px;
+        }
+
+        .description-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--verde-principal);
+        }
+
+        .product-description ul {
+            list-style: none; /* Remove as bolinhas */
+            padding-left: 0;   /* Remove o recuo padrão do navegador */
+            margin-top: 5px;   /* Adiciona um pequeno espaço da linha "Especificações:" */
+        }
+
+        .product-seller {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .seller-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .seller-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .seller-rating {
+            color: #ffc107;
+            margin-bottom: 5px;
+        }
+
+        .contact-seller {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-contact {
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--verde-terciario);
+            color: white;
+        }
+
+        .btn-message {
+            background-color: #1c6400;
+            color: white;
+        }
+
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background-color: #e9f5e3;
+            color: #1c6400;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .similar-products {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .view-all {
+            color: #1c6400;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #1c6400;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .product-info-card {
+            padding: 15px;
+        }
+
+        .product-price-card {
+            font-weight: bold;
+            color: #1c6400;
+            margin-bottom: 5px;
+        }
+
+        .product-title-card {
+            margin-bottom: 10px;
+            font-size: 14px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-location {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 768px) {
+            .product-detail-container {
+                flex-direction: column;
+            }
+            
+            .header-esquerda form {
+                display: none;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-esquerda">
+            <img class="logo" src="images/logo.png" alt="logo">
+            <form action="/buscar" method="GET">
+                <button class="buscar" type="submit">Buscar</button>
+                <input class="pesquisar" type="search" name="q" placeholder="Pesquisar...">        
+            </form>
+        </div>
+
+        <div class="header-group-links">
+            <nav>
+                <a class="header-link" href="#" id="chat-link">Chat</a>
+                <a class="header-link" href="#">Meus anúncios</a>
+                <a class="header-link" href="#">Categorias</a>
+                <a class="header-link" href="login.html">Login</a>
+            </nav>
+            <a class="header-special" href="index.html">Voltar ao Início</a>
+        </div>
+    </header>
+
+    <div class="linha-fina"></div>
+
+    <div class="categories">
+        <a href="#">Eletrônicos</a>
+        <a href="#">Móveis</a>
+        <a href="#">Moda</a>
+        <a href="#">Esportes</a>
+        <a href="#">Veículos</a>
+        <a href="#">Imóveis</a>
+        <a href="#">Reciclados</a>Smartphone Samsung
+    </div>
+
+    <div class="container">
+        <div class="product-detail-container">
+            <div class="product-images">
+                <img id="main-image" class="main-image" src="images/s20.jpg" alt="Smartphone Samsung Galaxy S20">
+                <div class="image-thumbnails">
+                    <img class="thumbnail active" src="images/s20.jpg" alt="Vista frontal">
+
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-title">Smartphone Samsung Galaxy S20 em ótimo estado de conservação</h1>
+                <div class="product-price">Troco por bicicleta</div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>São Paulo, SP</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-eye"></i>
+                        <span>245 visualizações</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Publicado há 2 dias</span>
+                    </div>
+                </div>
+                
+                <div class="product-description">
+                    <div class="description-title">Descrição</div>
+                    <p>Smartphone Samsung Galaxy S20 em perfeito estado de conservação. Sem riscos na tela, funcionando perfeitamente. Inclui carregador original e capa protetora.
+                    Especificações: Tela 6.2" Dynamic AMOLED 2X, Processador Exynos 990, Memória RAM de 8GB, Armazenamento de 128GB, Câmera traseira de 64MP + 12MP + 12MP, Câmera frontal de 10MP, Bateria de 4000mAh.
+                    Estou interessado em trocar por uma bicicleta em bom estado, preferencialmente aro 29. Aceito outras propostas também.</p>
+                </div>
+                
+                <div class="product-seller">
+                    <img class="seller-avatar" src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1c6400&color=fff" alt="Carlos Silva">
+                    <div class="seller-info">
+                        <h3>Carlos Silva</h3>
+                        <div class="seller-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(12 avaliações)</span>
+                        </div>
+                        <p>Membro desde 2023</p>
+                    </div>
+                </div>
+                
+                <div class="contact-seller">
+                    <button class="btn-contact btn-whatsapp">
+                        <i class="fab fa-whatsapp" id="open_whatsapp"></i> Entrar em contato
+                    </button>
+                    <button class="btn-contact btn-message">
+                        <i class="fas fa-comment"></i> Enviar mensagem
+                    </button>
+                </div>
+                
+                <div class="product-tags">
+                    <span class="tag">smartphone</span>
+                    <span class="tag">samsung</span>
+                    <span class="tag">galaxy s20</span>
+                    <span class="tag">eletrônico</span>
+                    <span class="tag">usado</span>
+                    <span class="tag">troca</span>
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Reusemi</h3>
+                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem e<br>reutilização de produtos.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Úteis</h3>
+                    <ul>
+                        <li><a href="#">Como vender</a></li>
+                        <li><a href="#">Dicas de segurança</a></li>
+                        <li><a href="#">Perguntas frequentes</a></li>
+                        <li><a href="#">Sustentabilidade</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="#">Fale conosco</a></li>
+                        <li><a href="#">Anuncie</a></li>
+                        <li><a href="#">Trabalhe conosco</a></li>
+                        <li><a href="#">Seja um parceiro</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 REUSEMI - Todos os direitos reservados. ♻️</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
