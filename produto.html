@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto - Reusemi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
+    <style>
+        /* Container alinhado exatamente às margens laterais do header (7% de cada lado) */
+        .produto-container {
+            width: 86%;
+            max-width: 1650px;
+            margin: 0 auto;
+            padding: 10px 0 40px 0;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0 22px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .breadcrumb a {
+            color: #2e8b00;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .detalhe-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .detalhe-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 26px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e8f0e6;
+        }
+
+        .detalhe-imagem-box {
+            width: 100%;
+            height: 420px;
+            background-color: #f6f9f5;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid #e2ece0;
+        }
+
+        .detalhe-imagem-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .detalhe-secao-titulo {
+            font-size: 18px;
+            color: #1c6400;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e8f0e6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detalhe-descricao {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #333;
+            white-space: pre-line;
+            margin-bottom: 24px;
+        }
+
+        .detalhe-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag-pill {
+            background-color: #eef8ea;
+            color: #1c6400;
+            border: 1px solid #c5e6b8;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Coluna Direita - Informações e Contato */
+        .badges-topo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .badge-item {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .badge-negociacao {
+            background-color: #58cc02;
+            color: #fff;
+        }
+
+        .badge-condicao {
+            background-color: #1c6400;
+            color: #fff;
+        }
+
+        .badge-categoria {
+            background-color: #eef5ec;
+            color: #1c6400;
+            border: 1px solid #cce0c6;
+        }
+
+        .detalhe-titulo {
+            font-size: 24px;
+            color: #222;
+            line-height: 1.3;
+            margin-bottom: 14px;
+        }
+
+        .detalhe-proposta-box {
+            background-color: #f3fbee;
+            border-left: 4px solid #58cc02;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .detalhe-proposta-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #4d7c3b;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .detalhe-proposta-valor {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1c6400;
+        }
+
+        .detalhe-ficha {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 22px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .detalhe-ficha li {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .detalhe-ficha li span:first-child {
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detalhe-ficha li span:last-child {
+            font-weight: 600;
+            color: #222;
+            text-transform: capitalize;
+        }
+
+        .contato-box {
+            background-color: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 10px;
+        }
+
+        .contato-box h3 {
+            font-size: 16px;
+            color: #222;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contato-info-texto {
+            background: #fff;
+            border: 1px dashed #1c6400;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1c6400;
+            margin-bottom: 14px;
+            word-break: break-all;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-acao-contato {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.15s, opacity 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .btn-acao-contato:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #ffffff;
+        }
+
+        .btn-copiar {
+            background-color: #1c6400;
+            color: #ffffff;
+        }
+
+        .btn-chat-interno {
+            background-color: #eef8ea;
+            color: #1c6400;
+            border: 1px solid #1c6400;
+            margin-bottom: 0;
+        }
+
+        .estado-carregamento {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (max-width: 900px) {
+            .produto-container {
+                width: 94%;
+            }
+
+            .detalhe-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detalhe-imagem-box {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-esquerda">
+            <button class="menu-toggle"
+                onclick="document.querySelector('nav').classList.toggle('active')">☰</button>
+
+            <a href="index.html">
+                <img class="logo" src="images/logo.png" alt="logo">
+            </a>
+            <form action="index.html" method="GET">
+                <button class="buscar" type="submit">Buscar</button>
+                <input class="pesquisar" type="search" name="q" placeholder="Pesquisar...">
+            </form>
+        </div>
+
+        <div class="header-group-links">
+            <nav>
+                <a class="header-link" href="#" id="chat-link">Chat</a>
+                <a class="header-link" href="index.html">Meus anúncios</a>
+                <a class="header-link" href="index.html">Categorias</a>
+                <a class="header-link" href="login.html">Login</a>
+            </nav>
+            <a class="header-special" href="anunciar.html">Anuncie Grátis</a>
+        </div>
+    </header>
+
+    <div class="linha-fina"></div>
+
+    <div class="categories">
+        <a href="index.html">Eletrônicos</a>
+        <a href="index.html">Móveis</a>
+        <a href="index.html">Moda</a>
+        <a href="index.html">Esportes</a>
+        <a href="index.html">Veículos</a>
+        <a href="index.html">Imóveis</a>
+        <a href="index.html">Reciclados</a>
+    </div>
+
+    <div class="produto-container">
+        <div class="breadcrumb">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Voltar para os anúncios</a>
+            <span>/</span>
+            <span id="breadcrumb-categoria">Detalhes do Anúncio</span>
+        </div>
+
+        <!-- Área onde o produto será renderizado -->
+        <div id="conteudo-produto">
+            <div class="estado-carregamento">
+                <i class="fas fa-spinner fa-spin fa-2x" style="color: #1c6400; margin-bottom: 12px;"></i>
+                <p>Carregando informações do anúncio...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Reusemi</h3>
+                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem
+                        e<br>reutilização de produtos.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Links Úteis</h3>
+                    <ul>
+                        <li><a href="#">Como vender</a></li>
+                        <li><a href="#">Dicas de segurança</a></li>
+                        <li><a href="#">Perguntas frequentes</a></li>
+                        <li><a href="#">Sustentabilidade</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="#">Fale conosco</a></li>
+                        <li><a href="anunciar.html">Anuncie</a></li>
+                        <li><a href="#">Trabalhe conosco</a></li>
+                        <li><a href="#">Seja um parceiro</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 REUSEMI - Todos os direitos reservados. ♻️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="troca-ai-widget.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const produtoId = params.get('id');
+            const container = document.getElementById('conteudo-produto');
+
+            if (!produtoId) {
+                container.innerHTML = `
+                    <div class="estado-carregamento">
+                        <h3>Nenhum anúncio selecionado.</h3>
+                        <p style="margin: 12px 0;">Escolha um item na página inicial para ver os detalhes.</p>
+                        <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Voltar ao Início</a>
+                    </div>
+                `;
+                return;
+            }
+
+            fetch('http://localhost:8080/api/produtos')
+                .then(response => response.json())
+                .then(resposta => {
+                    const lista = resposta.data || resposta;
+                    const produto = Array.isArray(lista)
+                        ? lista.find(item => String(item.id) === String(produtoId))
+                        : null;
+
+                    if (!produto) {
+                        container.innerHTML = `
+                            <div class="estado-carregamento">
+                                <h3>Anúncio não encontrado</h3>
+                                <p style="margin: 12px 0;">Este produto pode ter sido removido ou o link está incorreto.</p>
+                                <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Ver outros anúncios</a>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    renderizarProduto(produto);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar produto:', error);
+                    container.innerHTML = `
+                        <div class="estado-carregamento">
+                            <h3 style="color: #c0392b;">Erro de conexão com o servidor</h3>
+                            <p style="margin: 12px 0;">Verifique se o back-end Java está rodando na porta 8080.</p>
+                            <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Voltar ao Início</a>
+                        </div>
+                    `;
+                });
+        });
+
+        function formatarTexto(texto) {
+            if (!texto) return 'Não informado';
+            const mapa = {
+                'eletronicos': 'Eletrônicos',
+                'moveis': 'Móveis',
+                'moda': 'Moda',
+                'esportes': 'Esportes',
+                'veiculos': 'Veículos',
+                'imoveis': 'Imóveis',
+                'reciclados': 'Produtos Reciclados',
+                'troca': 'Troca',
+                'doacao': 'Doação',
+                'novo': 'Novo',
+                'usado': 'Usado',
+                'recondicionado': 'Recondicionado'
+            };
+            return mapa[texto.toLowerCase()] || texto;
+        }
+
+        function renderizarProduto(produto) {
+            document.title = `${produto.titulo} - Reusemi`;
+            document.getElementById('breadcrumb-categoria').textContent = formatarTexto(produto.categoria);
+
+            const temImagemValida = produto.imagem && produto.imagem.startsWith('data:image');
+            const imagemFinal = temImagemValida ? produto.imagem : 'images/logo.png';
+
+            const categoriaFmt = formatarTexto(produto.categoria);
+            const negociacaoFmt = formatarTexto(produto.tipoNegociacao);
+            const condicaoFmt = formatarTexto(produto.condicao);
+            const contato = produto.contato || 'Não informado';
+
+            let tagsHtml = '<span style="color: #777; font-size: 14px;">Nenhuma tag adicionada.</span>';
+            if (produto.tags && produto.tags.trim() !== '') {
+                tagsHtml = produto.tags
+                    .split(',')
+                    .map(tag => tag.trim())
+                    .filter(tag => tag.length > 0)
+                    .map(tag => `<span class="tag-pill">#${tag}</span>`)
+                    .join('');
+            }
+
+            const apenasNumeros = contato.replace(/\D/g, '');
+            const mensagemWhats = encodeURIComponent(`Olá! Vi seu anúncio "${produto.titulo}" no Reusemi e tenho interesse em negociar.`);
+            const linkWhats = apenasNumeros.length >= 10
+                ? `https://wa.me/${apenasNumeros.startsWith('55') ? apenasNumeros : '55' + apenasNumeros}?text=${mensagemWhats}`
+                : null;
+
+            const botaoWhatsHtml = linkWhats
+                ? `<a href="${linkWhats}" target="_blank" class="btn-acao-contato btn-whatsapp">
+                       <i class="fab fa-whatsapp fa-lg"></i> Conversar no WhatsApp
+                   </a>`
+                : '';
+
+            const container = document.getElementById('conteudo-produto');
+            container.innerHTML = `
+                <div class="detalhe-grid">
+                    <!-- Coluna Esquerda: Foto, Descrição e Tags -->
+                    <div class="detalhe-card">
+                        <div class="detalhe-imagem-box">
+                            <img src="${imagemFinal}" alt="${produto.titulo}">
+                        </div>
+
+                        <h2 class="detalhe-secao-titulo">
+                            <i class="fas fa-align-left"></i> Descrição do Produto
+                        </h2>
+                        <p class="detalhe-descricao">${produto.descricao || 'Sem descrição detalhada.'}</p>
+
+                        <h2 class="detalhe-secao-titulo">
+                            <i class="fas fa-tags"></i> Tags
+                        </h2>
+                        <div class="detalhe-tags">
+                            ${tagsHtml}
+                        </div>
+                    </div>
+
+                    <!-- Coluna Direita: Proposta, Ficha Técnica e Contato -->
+                    <div class="detalhe-card">
+                        <div class="badges-topo">
+                            <span class="badge-item badge-negociacao">${negociacaoFmt}</span>
+                            <span class="badge-item badge-condicao">${condicaoFmt}</span>
+                            <span class="badge-item badge-categoria">${categoriaFmt}</span>
+                        </div>
+
+                        <h1 class="detalhe-titulo">${produto.titulo}</h1>
+
+                        <div class="detalhe-proposta-box">
+                            <div class="detalhe-proposta-label">Interesse / O que busca em troca</div>
+                            <div class="detalhe-proposta-valor">${produto.valor || 'A combinar'}</div>
+                        </div>
+
+                        <ul class="detalhe-ficha">
+                            <li>
+                                <span><i class="fas fa-handshake"></i> Negociação</span>
+                                <span>${negociacaoFmt}</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-box-open"></i> Condição</span>
+                                <span>${condicaoFmt}</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-layer-group"></i> Categoria</span>
+                                <span>${categoriaFmt}</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-map-marker-alt"></i> Localização</span>
+                                <span>${produto.localizacao || 'Não informada'}</span>
+                            </li>
+                            <li>
+                                <span><i class="fas fa-hashtag"></i> Código do Anúncio</span>
+                                <span>#${produto.id}</span>
+                            </li>
+                        </ul>
+
+                        <div class="contato-box">
+                            <h3><i class="fas fa-user-circle" style="color: #1c6400;"></i> Dados do Anunciante</h3>
+                            <div class="contato-info-texto">
+                                <span id="texto-contato">${contato}</span>
+                            </div>
+
+                            ${botaoWhatsHtml}
+
+                            <button type="button" class="btn-acao-contato btn-copiar" id="btn-copiar-contato">
+                                <i class="far fa-copy"></i> Copiar Contato
+                            </button>
+
+                            <button type="button" class="btn-acao-contato btn-chat-interno" onclick="alert('Proposta registrada! Utilize o contato acima ou o assistente no canto inferior esquerdo para negociar.')">
+                                <i class="fas fa-comments"></i> Fazer Proposta de Troca
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('btn-copiar-contato').addEventListener('click', function () {
+                navigator.clipboard.writeText(contato).then(() => {
+                    const original = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Contato Copiado!';
+                    setTimeout(() => {
+                        this.innerHTML = original;
+                    }, 2000);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

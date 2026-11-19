@@ -95,10 +95,42 @@
                 </div>
                 
                 <div class="signup-link">
-                    Não tem uma conta? <a href="cad.html" id="signup-link">Cadastre-se agora</a>
+                    Não tem uma conta? <a href="#" id="signup-link">Cadastre-se agora</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Impede a página de recarregar[cite: 8]
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    try {
+        const response = await fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('Login feito com sucesso!');
+            // Salvar token e redirecionar para a home
+            localStorage.setItem('token', data.token);
+            window.location.href = 'index.html';
+        } else {
+            alert('Erro: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        alert('Erro ao tentar fazer login. Verifique se o servidor está rodando.');
+    }
+});
+</script>
+
 </body>
 </html>

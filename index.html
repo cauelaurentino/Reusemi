@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
 </head>
+
 <body>
     <header>
         <div class="header-esquerda">
+            <button class="menu-toggle"
+                onclick="document.querySelector('nav').classList.toggle('active')">☰</button>
+
             <img class="logo" src="images/logo.png" alt="logo">
             <form action="/buscar" method="GET">
                 <button class="buscar" type="submit">Buscar</button>
-                <input class="pesquisar" type="search" name="q" placeholder="Pesquisar...">        
+                <input class="pesquisar" type="search" name="q" placeholder="Pesquisar...">
             </form>
         </div>
 
         <div class="header-group-links">
             <nav>
-                <a class="header-link" href="#" id="chat-link" >Chat</a>
+                <a class="header-link" href="#" id="chat-link">Chat</a>
                 <a class="header-link" href="#">Meus anúncios</a>
                 <a class="header-link" href="#">Categorias</a>
                 <a class="header-link" href="login.html">Login</a>
@@ -30,7 +35,7 @@
     </header>
 
     <div class="linha-fina"></div>
-    
+
     <div class="categories">
         <a href="#">Eletrônicos</a>
         <a href="#">Móveis</a>
@@ -46,14 +51,15 @@
             <h2>Economize e Ajude o Planeta!</h2>
             <p>Anuncie, negocie e troque produtos usados. Dê uma nova vida para itens que merecem ser reutilizados.</p>
         </div>
-        
+
         <div class="main-content">
             <aside class="sidebar">
                 <div class="filters">
                     <h2>Filtros</h2>
                     <div class="filter-group">
                         <h3>Localização</h3>
-                        <input type="text" placeholder="Digite sua cidade" style="width: 94%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
+                        <input type="text" placeholder="Digite sua cidade"
+                            style="width: 94%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
                     </div>
                     <div class="filter-group">
                         <h3>Categoria</h3>
@@ -68,8 +74,10 @@
                     <div class="filter-group">
                         <h3>Preço</h3>
                         <div style="display: flex; gap: 10px;">
-                            <input type="number" placeholder="Mínimo" style="width: 50%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
-                            <input type="number" placeholder="Máximo" style="width: 50%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
+                            <input type="number" placeholder="Mínimo"
+                                style="width: 50%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
+                            <input type="number" placeholder="Máximo"
+                                style="width: 50%; padding: 8px; border: 1px solid #1c640044; border-radius: 4px;">
                         </div>
                     </div>
                     <div class="filter-group">
@@ -83,116 +91,20 @@
                     <button class="aplicar">Aplicar Filtros</button>
                 </div>
             </aside>
-            
+
+            <!-- AQUI ESTÁ A PARTE DOS PRODUTOS CORRIGIDA E LIMPA -->
             <main class="products">
                 <h2 class="section-title">
                     Anúncios em Destaque
-                    <a href="#" class="view-all">Ver todos</a>
                 </h2>
-                <div class="product-grid">
-                    <div class="product-card"> <a href="anuncio.html">
-                        <div class="product-image">
-                            <span class="product-badge">Destaque</span>
-                            <img src="images/s20.jpg" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">Troco por bike</div>
-                            <div class="product-title">Smartphone Samsung Galaxy S20 em ótimo estado de conservação</div>
-                            <div class="product-location"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</div>
-                        </div> </a>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="images/sofa.jpeg" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">Aceito propostas...</div>
-                            <div class="product-title">Sofá 3 lugares em ótimo estado, quase novo</div>
-                            <div class="product-location"><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, RJ</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">
-                            <img src="images/bike.jpg" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">Procuro tênis!</div>
-                            <div class="product-title">Bicicleta Caloi aro 29, perfeito para exercícios</div>
-                            <div class="product-location"><i class="fas fa-map-marker-alt"></i> Belo Horizonte, MG</div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">
-                            <span class="product-badge">Destaque</span>
-                            <img src="images/note.jpg" alt="">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-price">Busco celular.</div>
-                            <div class="product-title">Notebook Dell i7, 16GB RAM, SSD 512GB</div>
-                            <div class="product-location"><i class="fas fa-map-marker-alt"></i> Brasília, DF</div>
-                        </div>
-                    </div>
-                </div>
                 
-                <div class="featured">
-                    <h2 class="section-title">
-                        Produtos Sustentáveis
-                        <a href="#" class="view-all">Ver todos</a>
-                    </h2>
-                    <div class="product-grid">
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="images/bag.jpg" alt="">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-price">Troco por Blusa</div>
-                                <div class="product-title">EcoBag feita de material reciclado, resistente</div>
-                                <div class="product-location"><i class="fas fa-map-marker-alt"></i> Florianópolis, SC</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-card">
-                            <div class="product-image">
-                                <span class="product-badge">Destaque</span>
-                                <img src="images/vaso.jpeg" alt="">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-price">Procuro Quadros</div>
-                                <div class="product-title">Conjunto de vasos de jardim com material reciclado</div>
-                                <div class="product-location"><i class="fas fa-map-marker-alt"></i> Recife, PE</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-card">
-                            <div class="product-image">
-                                <img src="images/lumi.jpg" alt="">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-price">Busco uma maior!</div>
-                                <div class="product-title">Luminária de mesa feita com garrafas pet recicladas</div>
-                                <div class="product-location"><i class="fas fa-map-marker-alt"></i> Manaus, AM</div>
-                            </div>
-                        </div>
-                        
-                        <div class="product-card">
-                            <div class="product-image">
-                                <span class="product-badge">Destaque</span>
-                                <img src="images/pallet.jpg" alt="">
-                            </div>
-                            <div class="product-info">
-                                <div class="product-price">Analiso propostas</div>
-                                <div class="product-title">Móveis de jardim com pallets reciclados</div>
-                                <div class="product-location"><i class="fas fa-map-marker-alt"></i> Curitiba, PR</div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- O JavaScript (index.js) vai colocar os produtos do banco de dados aqui dentro -->
+                <div class="product-grid" id="lista-produtos">
+                    
                 </div>
             </main>
         </div>
-        
+
         <div class="benefits">
             <div class="benefit">
                 <i class="fas fa-recycle"></i>
@@ -211,7 +123,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Janela de Chat Flutuante -->
     <div id="chat-window" class="chat-window">
         <div class="chat-header">
@@ -242,7 +154,8 @@
                         </div>
                     </div>
                     <div class="conversation-item">
-                        <img src="https://ui-avatars.com/api/?name=Carlos+Oliveira&background=random" alt="Carlos Oliveira">
+                        <img src="https://ui-avatars.com/api/?name=Carlos+Oliveira&background=random"
+                            alt="Carlos Oliveira">
                         <div class="conversation-info">
                             <h4>Carlos Oliveira</h4>
                             <p>Quando posso ver o produto?</p>
@@ -270,7 +183,8 @@
                         <button class="message-button"><i class="fas fa-comment"></i></button>
                     </div>
                     <div class="contact-item">
-                        <img src="https://ui-avatars.com/api/?name=Julia+Ferreira&background=random" alt="Julia Ferreira">
+                        <img src="https://ui-avatars.com/api/?name=Julia+Ferreira&background=random"
+                            alt="Julia Ferreira">
                         <div class="contact-info">
                             <h4>Julia Ferreira</h4>
                             <p>Compra e vende roupas</p>
@@ -281,15 +195,16 @@
             </div>
         </div>
     </div>
-    
+
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>EcoMarket</h3>
-                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem e<br>reutilização de produtos.</p>
+                    <h3>Reusemi</h3>
+                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem
+                        e<br>reutilização de produtos.</p>
                 </div>
-                
+
                 <div class="footer-section">
                     <h3>Links Úteis</h3>
                     <ul>
@@ -299,7 +214,7 @@
                         <li><a href="#">Sustentabilidade</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h3>Contato</h3>
                     <ul>
@@ -310,13 +225,16 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="copyright">
                 <p>&copy; 2025 REUSEMI - Todos os direitos reservados. ♻️</p>
             </div>
         </div>
     </footer>
 
+    <!-- JS do widget e JS Geral -->
+    <script src="troca-ai-widget.js"></script>
     <script src="index.js"></script>
 </body>
+
 </html>
