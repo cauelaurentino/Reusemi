@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,11 +38,15 @@
 
         <!-- O form agora envolve tudo, mas a classe das colunas fica numa div separada -->
         <form id="form-anuncio">
-            <div class="anuncio-form">
-                <div class="form-coluna">
+            <!-- align-items: start evita o buraco branco no final da tela -->
+            <div class="anuncio-form"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start; margin-bottom: 20px;">
+
+                <div class="form-coluna" style="display: flex; flex-direction: column; gap: 15px;">
                     <div class="form-grupo">
                         <label for="titulo">Título do anúncio *</label>
-                        <input type="text" id="titulo" name="titulo" required placeholder="Ex: Smartphone Samsung Galaxy S20 em ótimo estado">
+                        <input type="text" id="titulo" name="titulo" required
+                            placeholder="Ex: Smartphone Samsung Galaxy S20 em ótimo estado">
                     </div>
 
                     <div class="form-grupo">
@@ -68,8 +73,15 @@
                     </div>
 
                     <div class="form-grupo">
-                        <label for="valor">O que busca em troca / Valor *</label>
+                        <label for="valor">O que busca em troca / Interesse *</label>
                         <input type="text" id="valor" name="valor" required placeholder="Ex: Troco por bicicleta">
+                    </div>
+
+                    <!-- NOVO CAMPO DE VALOR DE REFERÊNCIA -->
+                    <div class="form-grupo">
+                        <label for="valor-referencia">Valor de referência (opcional)</label>
+                        <input type="text" id="valor-referencia" name="valor-referencia"
+                            placeholder="Ex: R$ 800,00 (Base para troca justa)">
                     </div>
 
                     <div class="form-grupo">
@@ -84,22 +96,33 @@
 
                     <div class="form-grupo">
                         <label for="descricao">Descrição *</label>
-                        <textarea id="descricao" name="descricao" required placeholder="Descreva detalhadamente o produto, incluindo marcas, modelo, estado de conservação, acessórios incluídos, etc."></textarea>
+                        <textarea id="descricao" name="descricao" required
+                            placeholder="Descreva detalhadamente o produto, incluindo marcas, modelo, estado de conservação, acessórios incluídos, etc."
+                            style="min-height: 120px; resize: vertical;"></textarea>
                     </div>
                 </div>
 
-                <div class="form-coluna">
+                <div class="form-coluna" style="display: flex; flex-direction: column; gap: 15px;">
                     <div class="form-group">
                         <label for="imagens-upload">Fotos do Produto (Máximo 5)</label>
-                        <div class="upload-area">
+
+                        <!-- Novo Design da Área de Upload -->
+                        <div class="upload-area"
+                            style="border: 2px dashed #88d454; border-radius: 8px; padding: 30px 15px; text-align: center; background-color: #f9fdf7; cursor: pointer; transition: all 0.2s ease-in-out;"
+                            onclick="document.getElementById('imagens-upload').click()"
+                            onmouseover="this.style.backgroundColor='#eef8ea'"
+                            onmouseout="this.style.backgroundColor='#f9fdf7'">
                             <input type="file" id="imagens-upload" multiple accept="image/*" style="display: none;">
-                            <button type="button" class="btn-acao-contato" style="background-color: #1c6400; color: white;" onclick="document.getElementById('imagens-upload').click()">
-                                <i class="fas fa-camera"></i> Selecionar Fotos
-                            </button>
-                            <p style="font-size: 13px; color: #666; margin-top: 10px;">A primeira foto será a capa do anúncio. Use as setas para reordenar.</p>
+                            <i class="fas fa-cloud-upload-alt"
+                                style="font-size: 40px; color: #1c6400; margin-bottom: 12px;"></i>
+                            <div style="font-size: 15px; font-weight: 600; color: #1c6400; margin-bottom: 6px;">Clique
+                                aqui para selecionar fotos</div>
+                            <p style="font-size: 12px; color: #666; margin: 0;">A primeira foto será a capa. Use as
+                                setas para reordenar.</p>
                         </div>
 
-                        <div id="preview-container" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px;"></div>
+                        <div id="preview-container"
+                            style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 15px;"></div>
                     </div>
 
                     <div class="form-grupo">
@@ -109,21 +132,33 @@
 
                     <div class="form-grupo">
                         <label for="contato">Contato *</label>
-                        <input type="text" id="contato" name="contato" required placeholder="Telefone, WhatsApp ou e-mail">
+                        <input type="text" id="contato" name="contato" required
+                            placeholder="Telefone, WhatsApp ou e-mail">
                     </div>
 
                     <div class="form-grupo">
                         <label for="tags">Tags (opcional)</label>
-                        <input type="text" id="tags" name="tags" placeholder="Ex: smartphone, samsung, eletrônico, usado">
-                        <small>Separe as tags por vírgula</small>
+                        <input type="text" id="tags" name="tags"
+                            placeholder="Ex: smartphone, samsung, eletrônico, usado">
+                        <small style="color: #888; font-size: 12px; margin-top: 4px; display: block;">Separe as tags por
+                            vírgula</small>
                     </div>
+
+
                 </div>
             </div>
 
-            <!-- Botões fora da classe de colunas, resolvendo o bug visual -->
-            <div class="botoes-anuncio" style="width: 100%; display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                <button type="button" class="btn btn-cancelar" onclick="window.location.href='index.html'">Cancelar</button>
-                <button type="submit" class="btn btn-publicar">Publicar Anúncio</button>
+            <!-- Botões Inferiores Ajustados -->
+            <div class="botoes-anuncio"
+                style="width: 100%; display: flex; justify-content: flex-end; gap: 12px; padding-top: 20px; border-top: 1px solid #eaeaea;">
+                <button type="button" class="btn btn-cancelar"
+                    style="padding: 12px 24px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-weight: 600; color: #555; transition: 0.2s;"
+                    onclick="window.location.href='index.html'" onmouseover="this.style.background='#ebebeb'"
+                    onmouseout="this.style.background='#f5f5f5'">Cancelar</button>
+                <button type="submit" class="btn btn-publicar"
+                    style="padding: 12px 24px; background: #58cc02; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; transition: 0.2s;"
+                    onmouseover="this.style.background='#4db301'" onmouseout="this.style.background='#58cc02'">Publicar
+                    Anúncio</button>
             </div>
         </form>
     </div>
@@ -133,7 +168,8 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Reusemi</h3>
-                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem e<br>reutilização de produtos.</p>
+                    <p>O lugar ideal para comprar, vender e contribuir <br>com o meio ambiente através da reciclagem
+                        e<br>reutilização de produtos.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Links Úteis</h3>
@@ -232,13 +268,14 @@
         const formAnuncio = document.getElementById('form-anuncio');
         if (formAnuncio) {
             formAnuncio.addEventListener('submit', function (e) {
-                e.preventDefault(); 
+                e.preventDefault();
                 const produto = {
                     titulo: document.getElementById('titulo').value,
                     categoria: document.getElementById('categoria').value,
-                    tipoNegociacao: document.getElementById('tipo-negociacao').value, 
+                    tipoNegociacao: document.getElementById('tipo-negociacao').value,
                     valor: document.getElementById('valor').value,
-                    condicao: document.getElementById('condicao').value, 
+                    valorReferencia: document.getElementById('valor-referencia').value, // <-- ADICIONE ESTA LINHA
+                    condicao: document.getElementById('condicao').value,
                     descricao: document.getElementById('descricao').value,
                     localizacao: document.getElementById('localizacao').value,
                     contato: document.getElementById('contato').value,
@@ -251,20 +288,23 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(produto)
                 })
-                .then(response => {
-                    if (!response.ok) throw new Error("Erro no servidor");
-                    return response.json();
-                })
-                .then(data => {
-                    alert('Anúncio publicado com sucesso!');
-                    window.location.href = 'index.html';
-                })
-                .catch(error => {
-                    console.error('Erro ao enviar:', error);
-                    alert('Erro ao publicar. Verifique se o back-end (Java) está rodando.');
-                });
+                    .then(response => {
+                        if (!response.ok) throw new Error("Erro no servidor");
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Anúncio publicado com sucesso!');
+                        window.location.href = 'index.html';
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar:', error);
+                        alert('Erro ao publicar. Verifique se o back-end (Java) está rodando.');
+                    });
             });
         }
     </script>
+
+    <script src="auth.js"></script>
 </body>
+
 </html>

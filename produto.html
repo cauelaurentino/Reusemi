@@ -296,8 +296,7 @@
 <body>
     <header>
         <div class="header-esquerda">
-            <button class="menu-toggle"
-                onclick="document.querySelector('nav').classList.toggle('active')">☰</button>
+            <button class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">☰</button>
 
             <a href="index.html">
                 <img class="logo" src="images/logo.png" alt="logo">
@@ -493,15 +492,21 @@
 
                         <h1 class="detalhe-titulo">${produto.titulo}</h1>
 
-                        <div class="detalhe-proposta-box">
-                            <div class="detalhe-proposta-label">Interesse / O que busca em troca</div>
-                            <div class="detalhe-proposta-valor">${produto.valor || 'A combinar'}</div>
+                    <div class="detalhe-proposta-box">
+                    <div class="detalhe-proposta-label">Interesse / O que busca em troca</div>
+                    <div class="detalhe-proposta-valor">${produto.valor || 'A combinar'}</div>
+                    
+                    ${produto.valorReferencia && produto.valorReferencia.trim() !== '' ? `
+                        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #b8e2a3; font-size: 14px; color: #2d5a1e;">
+                            <i class="fas fa-tag"></i> <strong>Valor de referência:</strong> ${produto.valorReferencia}
                         </div>
+                    ` : ''}
+                </div>
 
                         <ul class="detalhe-ficha">
                             <li><span><i class="fas fa-handshake"></i> Negociação</span><span>${negociacaoFmt}</span></li>
+                            <li><span><i class="fas fa-tag"></i> Valor de Referência</span><span>${produto.valorReferencia || 'Não informado'}</span></li>
                             <li><span><i class="fas fa-box-open"></i> Condição</span><span>${condicaoFmt}</span></li>
-                            <li><span><i class="fas fa-layer-group"></i> Categoria</span><span>${categoriaFmt}</span></li>
                             <li><span><i class="fas fa-map-marker-alt"></i> Localização</span><span>${produto.localizacao || 'Não informada'}</span></li>
                             <li><span><i class="fas fa-hashtag"></i> Código do Anúncio</span><span>#${produto.id}</span></li>
                         </ul>
@@ -536,6 +541,7 @@
             });
         }
     </script>
+    <script src="auth.js"></script>
 </body>
 
 </html>

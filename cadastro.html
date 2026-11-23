@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Reusemi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
+    <style>
+        .login-form { max-width: 460px; padding: 30px 40px; }
+        .form-row { display: flex; gap: 15px; }
+        .form-row .form-group { flex: 1; }
+        .avatar-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .avatar-preview {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 2px dashed #6bb422;
+            background-color: #f4fbf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .avatar-preview:hover { transform: scale(1.05); border-color: #1c6400; }
+        .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-label { font-size: 12px; color: #666; margin-top: 6px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-esquerda">
+            <a href="index.html"><img class="logo" src="images/logo.png" alt="logo"></a>
+            <form action="index.html" method="GET">
+                <button class="buscar" type="submit">Buscar</button>
+                <input class="pesquisar" type="search" name="q" placeholder="Pesquisar...">        
+            </form>
+        </div>
+
+        <div class="header-group-links">
+            <nav>
+                <a class="header-link" href="index.html">Início</a>
+                <a class="header-link" href="#">Meus anúncios</a>
+                <a class="header-link" href="#">Categorias</a>
+                <a class="header-link" href="login.html" style="color: #6bb422;">Login</a>
+            </nav>
+            <a class="header-special" href="anunciar.html">Anuncie Grátis</a>
+        </div>
+    </header>
+
+    <div class="linha-fina"></div>
+
+    <div class="login-container">
+        <div class="login-banner">
+            <h2>Crie sua conta grátis!</h2>
+            <p>Comece a anunciar itens que você não usa mais e encontre trocas incríveis perto de você.</p>
+            <div class="banner-icons">
+                <div class="banner-icon">
+                    <i class="fas fa-recycle"></i>
+                    <span>Sustentabilidade</span>
+                </div>
+                <div class="banner-icon">
+                    <i class="fas fa-handshake"></i>
+                    <span>Trocas Seguras</span>
+                </div>
+                <div class="banner-icon">
+                    <i class="fas fa-leaf"></i>
+                    <span>Impacto Verde</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-form-container">
+            <div class="login-form">
+                <h2>Cadastre-se no Reusemi</h2>
+                <p>Preencha seus dados básicos para começar</p>
+                
+                <form id="cadastroForm">
+                    <div class="avatar-upload" onclick="document.getElementById('foto-perfil').click()">
+                        <div class="avatar-preview" id="avatar-box">
+                            <i class="fas fa-camera" style="font-size: 26px; color: #6bb422;"></i>
+                        </div>
+                        <span class="avatar-label">Foto de perfil (opcional)</span>
+                        <input type="file" id="foto-perfil" accept="image/*" style="display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome">Nome completo *</label>
+                        <input type="text" id="nome" placeholder="Como quer ser chamado" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" placeholder="seu@email.com" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="idade">Idade *</label>
+                            <input type="number" id="idade" min="14" max="120" placeholder="Ex: 24" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade / UF *</label>
+                            <input type="text" id="cidade" placeholder="Ex: São Paulo, SP" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha *</label>
+                        <input type="password" id="password" placeholder="Crie uma senha" required minlength="4">
+                    </div>
+                    
+                    <button type="submit" class="login-button">Criar minha conta</button>
+                </form>
+                
+                <div class="signup-link" style="margin-top: 15px;">
+                    Já tem uma conta? <a href="login.html">Faça login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let fotoPerfilBase64 = null;
+
+        document.getElementById('foto-perfil').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                fotoPerfilBase64 = event.target.result;
+                document.getElementById('avatar-box').innerHTML = `<img src="${fotoPerfilBase64}" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('cadastroForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const novoUsuario = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                idade: parseInt(document.getElementById('idade').value),
+                cidade: document.getElementById('cidade').value,
+                senha: document.getElementById('password').value,
+                fotoPerfil: fotoPerfilBase64
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(novoUsuario)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Cadastro realizado com sucesso! Faça login para continuar.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao conectar com o servidor.');
+            }
+        });
+    </script>
+    <script src="auth.js"></script>
+</body>
+</html>
