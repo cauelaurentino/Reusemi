@@ -1,38 +1,41 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
     carregarProdutos();
 });
 
 function carregarProdutos() {
-    const listaProdutos = document.getElementById('lista-produtos');
-    if (!listaProdutos) {
-        console.error("ERRO: Div #lista-produtos não encontrada no index.html!");
+    fetch('http://localhost:8080/api/produtos')
+        .then(response => response.json())
+        .then(data => {
+            const lista = data.data || data; 
+            if (!Array.isArray(lista)) {
+                console.error("Erro: A API não retornou uma lista válida.", lista);
+                return;
+            }
+            renderizarCards(lista);
+        })
+        .catch(error => console.error('Erro ao carregar produtos:', error));
+}
+
+function renderizarCards(produtos) {
+    // Procura por 'lista-produtos' ou 'produtos-grid' no seu index.html
+    const grid = document.getElementById('lista-produtos') || document.getElementById('produtos-grid'); 
+    
+    if (!grid) {
+        console.error("ERRO NO HTML: Não encontrei a div #lista-produtos nem #produtos-grid no index.html!");
         return;
     }
     
-    listaProdutos.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Carregando anúncios...</p>';
+    grid.innerHTML = '';
+    
+    if (produtos.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Nenhum anúncio cadastrado ainda.</p>';
+        return;
+    }
 
-    fetch('http://localhost:8080/api/produtos')
-        .then(response => response.json())
-        .then(resposta => {
-            console.log("DEBUG INDEX 1 - Dados recebidos do Java:", resposta);
-            listaProdutos.innerHTML = '';
-            
-            if (resposta.success && resposta.data.length > 0) {
-                resposta.data.forEach(produto => {
-                    console.log(`DEBUG INDEX 2 - Produto "${produto.titulo}" | Campo imagem:`, produto.imagem ? `OK (${produto.imagem.length} caracteres)` : "NULL / VAZIO");
-                    const card = criarCardProduto(produto);
-                    listaProdutos.appendChild(card);
-                });
-            } else {
-                listaProdutos.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">Nenhum anúncio encontrado.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('ERRO INDEX - Falha ao buscar produtos:', error);
-            listaProdutos.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: red;">Erro ao conectar no Java (porta 8080).</p>';
-        });
+    // Cria uma cópia da lista e inverte para mostrar os mais novos primeiro
+    [...produtos].reverse().forEach(produto => {
+        grid.appendChild(criarCardProduto(produto));
+    });
 }
 
 function criarCardProduto(produto) {
@@ -40,16 +43,22 @@ function criarCardProduto(produto) {
     div.className = 'product-card';
     div.style.cursor = 'pointer';
     
-    const temImagemValida = produto.imagem && produto.imagem.startsWith('data:image');
-    const imagemFinal = temImagemValida ? produto.imagem : 'images/logo.png';
+    // Pega a capa (posição 0 da lista) ou a foto única antiga, ou a logo como reserva
+    let imagemFinal = 'images/logo.png'; 
+    if (produto.imagens && Array.isArray(produto.imagens) && produto.imagens.length > 0 && produto.imagens[0].startsWith('data:image')) {
+        imagemFinal = produto.imagens[0];
+    } else if (produto.imagem && typeof produto.imagem === 'string' && produto.imagem.startsWith('data:image')) {
+        imagemFinal = produto.imagem;
+    }
     
-    const valor = produto.valor || 'Negociável';
+    const valor = produto.valor || 'A combinar';
     const titulo = produto.titulo || 'Produto sem título';
     const localizacao = produto.localizacao || 'Local não informado';
+    const condicao = produto.condicao || 'Usado';
 
     div.innerHTML = `
         <div class="product-image">
-            <span class="product-badge">${produto.condicao || 'Novo'}</span>
+            <span class="product-badge">${condicao}</span>
             <img src="${imagemFinal}" 
                  alt="${titulo}" 
                  style="object-fit: cover; width: 100%; height: 200px;">
@@ -61,82 +70,10 @@ function criarCardProduto(produto) {
         </div>
     `;
 
-    // Abre a página individual passando o ID do anúncio na URL
+    // Redireciona para os detalhes do produto
     div.addEventListener('click', () => {
         window.location.href = `produto.html?id=${produto.id}`;
     });
     
     return div;
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos do chat
-    const chatLink = document.getElementById('chat-link');
-    const chatWindow = document.getElementById('chat-window');
-    const closeChat = document.getElementById('close-chat');
-    const tabButtons = document.querySelectorAll('.tab-button');
-    
-    // Função para abrir o chat
-    function openChat() {
-        chatWindow.style.display = 'flex';
-    }
-    
-    // Função para fechar o chat
-    function closeChatWindow() {
-        chatWindow.style.display = 'none';
-    }
-    
-    // Função para trocar de aba
-    function switchTab(event) {
-        // Remove a classe active de todos os botões
-        tabButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-        
-        // Adiciona a classe active ao botão clicado
-        event.target.classList.add('active');
-        
-        // Oculta todos os conteúdos das abas
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        
-        // Mostra o conteúdo da aba correspondente
-        const tabId = event.target.getAttribute('data-tab') + '-tab';
-        document.getElementById(tabId).classList.add('active');
-    }
-    
-    // Event Listeners
-    chatLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        openChat();
-    });
-    
-    closeChat.addEventListener('click', closeChatWindow);
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', switchTab);
-    });
-    
-    // Fechar o chat ao clicar fora dele (opcional)
-    document.addEventListener('click', function(e) {
-        if (chatWindow.style.display === 'flex' && 
-            !chatWindow.contains(e.target) && 
-            e.target !== chatLink) {
-            closeChatWindow();
-        }
-    });
-    
-    // Adicionar funcionalidade aos botões de mensagem na aba de contatos
-    const messageButtons = document.querySelectorAll('.message-button');
-    messageButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Alternar para a aba de conversas
-            tabButtons[0].click();
-            
-            // Aqui você poderia adicionar lógica para iniciar uma nova conversa
-            // com o contato específico
-            alert('Iniciando conversa com este contato...');
-        });
-    });
-});

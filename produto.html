@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="shortcut icon" href="images/favicon-32x32.png" type="image/x-icon">
     <style>
-        /* Container alinhado exatamente às margens laterais do header (7% de cada lado) */
         .produto-container {
             width: 86%;
             max-width: 1650px;
@@ -63,7 +62,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
+            margin-bottom: 14px;
             border: 1px solid #e2ece0;
         }
 
@@ -109,7 +108,6 @@
             font-weight: 500;
         }
 
-        /* Coluna Direita - Informações e Contato */
         .badges-topo {
             display: flex;
             flex-wrap: wrap;
@@ -340,7 +338,6 @@
             <span id="breadcrumb-categoria">Detalhes do Anúncio</span>
         </div>
 
-        <!-- Área onde o produto será renderizado -->
         <div id="conteudo-produto">
             <div class="estado-carregamento">
                 <i class="fas fa-spinner fa-spin fa-2x" style="color: #1c6400; margin-bottom: 12px;"></i>
@@ -394,13 +391,7 @@
             const container = document.getElementById('conteudo-produto');
 
             if (!produtoId) {
-                container.innerHTML = `
-                    <div class="estado-carregamento">
-                        <h3>Nenhum anúncio selecionado.</h3>
-                        <p style="margin: 12px 0;">Escolha um item na página inicial para ver os detalhes.</p>
-                        <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Voltar ao Início</a>
-                    </div>
-                `;
+                container.innerHTML = `<div class="estado-carregamento"><h3>Nenhum anúncio selecionado.</h3><a href="index.html" class="header-special" style="display:inline-block;margin-top:12px;">Voltar ao Início</a></div>`;
                 return;
             }
 
@@ -408,50 +399,27 @@
                 .then(response => response.json())
                 .then(resposta => {
                     const lista = resposta.data || resposta;
-                    const produto = Array.isArray(lista)
-                        ? lista.find(item => String(item.id) === String(produtoId))
-                        : null;
+                    const produto = Array.isArray(lista) ? lista.find(item => String(item.id) === String(produtoId)) : null;
 
                     if (!produto) {
-                        container.innerHTML = `
-                            <div class="estado-carregamento">
-                                <h3>Anúncio não encontrado</h3>
-                                <p style="margin: 12px 0;">Este produto pode ter sido removido ou o link está incorreto.</p>
-                                <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Ver outros anúncios</a>
-                            </div>
-                        `;
+                        container.innerHTML = `<div class="estado-carregamento"><h3>Anúncio não encontrado</h3><a href="index.html" class="header-special" style="display:inline-block;margin-top:12px;">Ver outros anúncios</a></div>`;
                         return;
                     }
-
                     renderizarProduto(produto);
                 })
                 .catch(error => {
-                    console.error('Erro ao carregar produto:', error);
-                    container.innerHTML = `
-                        <div class="estado-carregamento">
-                            <h3 style="color: #c0392b;">Erro de conexão com o servidor</h3>
-                            <p style="margin: 12px 0;">Verifique se o back-end Java está rodando na porta 8080.</p>
-                            <a href="index.html" class="header-special" style="display: inline-block; margin-top: 10px;">Voltar ao Início</a>
-                        </div>
-                    `;
+                    console.error('Erro ao buscar produto:', error);
+                    container.innerHTML = `<div class="estado-carregamento"><h3 style="color: #c0392b;">Erro de conexão com o servidor Java</h3></div>`;
                 });
         });
 
         function formatarTexto(texto) {
             if (!texto) return 'Não informado';
             const mapa = {
-                'eletronicos': 'Eletrônicos',
-                'moveis': 'Móveis',
-                'moda': 'Moda',
-                'esportes': 'Esportes',
-                'veiculos': 'Veículos',
-                'imoveis': 'Imóveis',
-                'reciclados': 'Produtos Reciclados',
-                'troca': 'Troca',
-                'doacao': 'Doação',
-                'novo': 'Novo',
-                'usado': 'Usado',
-                'recondicionado': 'Recondicionado'
+                'eletronicos': 'Eletrônicos', 'moveis': 'Móveis', 'moda': 'Moda',
+                'esportes': 'Esportes', 'veiculos': 'Veículos', 'imoveis': 'Imóveis',
+                'reciclados': 'Produtos Reciclados', 'troca': 'Troca', 'doacao': 'Doação',
+                'novo': 'Novo', 'usado': 'Usado', 'recondicionado': 'Recondicionado'
             };
             return mapa[texto.toLowerCase()] || texto;
         }
@@ -460,8 +428,29 @@
             document.title = `${produto.titulo} - Reusemi`;
             document.getElementById('breadcrumb-categoria').textContent = formatarTexto(produto.categoria);
 
-            const temImagemValida = produto.imagem && produto.imagem.startsWith('data:image');
-            const imagemFinal = temImagemValida ? produto.imagem : 'images/logo.png';
+            // Monta lista de fotos (suporta o array novo e a imagem única antiga)
+            let listaFotos = [];
+            if (produto.imagens && Array.isArray(produto.imagens) && produto.imagens.length > 0) {
+                listaFotos = produto.imagens.filter(img => img && img.startsWith('data:image'));
+            } else if (produto.imagem && typeof produto.imagem === 'string' && produto.imagem.startsWith('data:image')) {
+                listaFotos = [produto.imagem];
+            }
+
+            const imagemFinal = listaFotos.length > 0 ? listaFotos[0] : 'images/logo.png';
+
+            let miniaturasHtml = '';
+            if (listaFotos.length > 1) {
+                miniaturasHtml = `
+                    <div id="galeria-miniaturas" style="display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 5px;">
+                        ${listaFotos.map((imgBase64, idx) => `
+                            <div class="miniatura-item" data-index="${idx}"
+                                 style="width: 80px; height: 80px; flex-shrink: 0; cursor: pointer; border-radius: 6px; overflow: hidden; border: 2px solid ${idx === 0 ? '#1c6400' : 'transparent'}; transition: 0.2s;">
+                                <img src="${imgBase64}" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
 
             const categoriaFmt = formatarTexto(produto.categoria);
             const negociacaoFmt = formatarTexto(produto.tipoNegociacao);
@@ -470,49 +459,31 @@
 
             let tagsHtml = '<span style="color: #777; font-size: 14px;">Nenhuma tag adicionada.</span>';
             if (produto.tags && produto.tags.trim() !== '') {
-                tagsHtml = produto.tags
-                    .split(',')
-                    .map(tag => tag.trim())
-                    .filter(tag => tag.length > 0)
-                    .map(tag => `<span class="tag-pill">#${tag}</span>`)
-                    .join('');
+                tagsHtml = produto.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0).map(tag => `<span class="tag-pill">#${tag}</span>`).join('');
             }
 
             const apenasNumeros = contato.replace(/\D/g, '');
-            const mensagemWhats = encodeURIComponent(`Olá! Vi seu anúncio "${produto.titulo}" no Reusemi e tenho interesse em negociar.`);
-            const linkWhats = apenasNumeros.length >= 10
-                ? `https://wa.me/${apenasNumeros.startsWith('55') ? apenasNumeros : '55' + apenasNumeros}?text=${mensagemWhats}`
-                : null;
-
-            const botaoWhatsHtml = linkWhats
-                ? `<a href="${linkWhats}" target="_blank" class="btn-acao-contato btn-whatsapp">
-                       <i class="fab fa-whatsapp fa-lg"></i> Conversar no WhatsApp
-                   </a>`
-                : '';
+            const mensagemWhats = encodeURIComponent(`Olá! Vi seu anúncio "${produto.titulo}" no Reusemi.`);
+            const linkWhats = apenasNumeros.length >= 10 ? `https://wa.me/${apenasNumeros.startsWith('55') ? apenasNumeros : '55' + apenasNumeros}?text=${mensagemWhats}` : null;
+            const botaoWhatsHtml = linkWhats ? `<a href="${linkWhats}" target="_blank" class="btn-acao-contato btn-whatsapp"><i class="fab fa-whatsapp fa-lg"></i> Conversar no WhatsApp</a>` : '';
 
             const container = document.getElementById('conteudo-produto');
             container.innerHTML = `
                 <div class="detalhe-grid">
-                    <!-- Coluna Esquerda: Foto, Descrição e Tags -->
                     <div class="detalhe-card">
                         <div class="detalhe-imagem-box">
-                            <img src="${imagemFinal}" alt="${produto.titulo}">
+                            <img id="foto-destaque" src="${imagemFinal}" alt="${produto.titulo}">
                         </div>
+                        
+                        ${miniaturasHtml}
 
-                        <h2 class="detalhe-secao-titulo">
-                            <i class="fas fa-align-left"></i> Descrição do Produto
-                        </h2>
+                        <h2 class="detalhe-secao-titulo"><i class="fas fa-align-left"></i> Descrição do Produto</h2>
                         <p class="detalhe-descricao">${produto.descricao || 'Sem descrição detalhada.'}</p>
 
-                        <h2 class="detalhe-secao-titulo">
-                            <i class="fas fa-tags"></i> Tags
-                        </h2>
-                        <div class="detalhe-tags">
-                            ${tagsHtml}
-                        </div>
+                        <h2 class="detalhe-secao-titulo"><i class="fas fa-tags"></i> Tags</h2>
+                        <div class="detalhe-tags">${tagsHtml}</div>
                     </div>
 
-                    <!-- Coluna Direita: Proposta, Ficha Técnica e Contato -->
                     <div class="detalhe-card">
                         <div class="badges-topo">
                             <span class="badge-item badge-negociacao">${negociacaoFmt}</span>
@@ -528,55 +499,39 @@
                         </div>
 
                         <ul class="detalhe-ficha">
-                            <li>
-                                <span><i class="fas fa-handshake"></i> Negociação</span>
-                                <span>${negociacaoFmt}</span>
-                            </li>
-                            <li>
-                                <span><i class="fas fa-box-open"></i> Condição</span>
-                                <span>${condicaoFmt}</span>
-                            </li>
-                            <li>
-                                <span><i class="fas fa-layer-group"></i> Categoria</span>
-                                <span>${categoriaFmt}</span>
-                            </li>
-                            <li>
-                                <span><i class="fas fa-map-marker-alt"></i> Localização</span>
-                                <span>${produto.localizacao || 'Não informada'}</span>
-                            </li>
-                            <li>
-                                <span><i class="fas fa-hashtag"></i> Código do Anúncio</span>
-                                <span>#${produto.id}</span>
-                            </li>
+                            <li><span><i class="fas fa-handshake"></i> Negociação</span><span>${negociacaoFmt}</span></li>
+                            <li><span><i class="fas fa-box-open"></i> Condição</span><span>${condicaoFmt}</span></li>
+                            <li><span><i class="fas fa-layer-group"></i> Categoria</span><span>${categoriaFmt}</span></li>
+                            <li><span><i class="fas fa-map-marker-alt"></i> Localização</span><span>${produto.localizacao || 'Não informada'}</span></li>
+                            <li><span><i class="fas fa-hashtag"></i> Código do Anúncio</span><span>#${produto.id}</span></li>
                         </ul>
 
                         <div class="contato-box">
                             <h3><i class="fas fa-user-circle" style="color: #1c6400;"></i> Dados do Anunciante</h3>
-                            <div class="contato-info-texto">
-                                <span id="texto-contato">${contato}</span>
-                            </div>
-
+                            <div class="contato-info-texto"><span id="texto-contato">${contato}</span></div>
                             ${botaoWhatsHtml}
-
-                            <button type="button" class="btn-acao-contato btn-copiar" id="btn-copiar-contato">
-                                <i class="far fa-copy"></i> Copiar Contato
-                            </button>
-
-                            <button type="button" class="btn-acao-contato btn-chat-interno" onclick="alert('Proposta registrada! Utilize o contato acima ou o assistente no canto inferior esquerdo para negociar.')">
-                                <i class="fas fa-comments"></i> Fazer Proposta de Troca
-                            </button>
+                            <button type="button" class="btn-acao-contato btn-copiar" id="btn-copiar-contato"><i class="far fa-copy"></i> Copiar Contato</button>
+                            <button type="button" class="btn-acao-contato btn-chat-interno" onclick="alert('Proposta registrada!')"><i class="fas fa-comments"></i> Fazer Proposta</button>
                         </div>
                     </div>
                 </div>
             `;
 
+            // Evento de clique nas miniaturas para trocar a foto principal
+            document.querySelectorAll('.miniatura-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const idx = Number(this.getAttribute('data-index'));
+                    document.getElementById('foto-destaque').src = listaFotos[idx];
+                    document.querySelectorAll('.miniatura-item').forEach(el => el.style.borderColor = 'transparent');
+                    this.style.borderColor = '#1c6400';
+                });
+            });
+
             document.getElementById('btn-copiar-contato').addEventListener('click', function () {
                 navigator.clipboard.writeText(contato).then(() => {
                     const original = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-check"></i> Contato Copiado!';
-                    setTimeout(() => {
-                        this.innerHTML = original;
-                    }, 2000);
+                    this.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                    setTimeout(() => { this.innerHTML = original; }, 2000);
                 });
             });
         }
