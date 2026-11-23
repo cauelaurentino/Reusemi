@@ -39,3 +39,5 @@ nb-configuration.xml
 *.class
 *.jar
 *.war
+*.mv.db
+*.trace.db
